@@ -1,0 +1,139 @@
+<div class="-mt-1">
+  <div class="flex justify-between items-center">
+    <h1 class="font-medium uppercase">{{'Eventos públicos'}}</h1>
+    <button class="py-0 flex items-center text-gray-500 hover:text-black hover:underline" (click)="create=true">
+      <i class="uil uil-plus-circle text-2xl"></i>
+      <span>{{'Agregar evento'}}</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-4 gap-5 pt-5">
+    <div *ngFor="let event of (events$ | async)?.data">
+      <section class="bg-white py-2 px-4 border shadow-md cursor-pointer" (click)="prepareEdit(event)">
+        <header class="flex justify-between">
+          <div class="flex flex-col">
+            <h1 class="capitalize font-medium">{{event?.attributes?.name}}</h1>
+            <span class="text-gray-400 text-xs">{{event?.attributes?.date}}</span>
+          </div>
+          <div>
+            <span
+              class="bg-green-300 text-green-600 rounded-full px-1 text-xs">{{event?.attributes?.status?.data?.attributes?.name}}</span>
+          </div>
+        </header>
+        <div class="flex justify-center">
+          <img class="h-36 object-cover" src="{{event.attributes.cover.data[0].attributes.url}}" alt="">
+        </div>
+        <p class="text-gray-400 text-sm">{{event?.attributes?.description}}</p>
+
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<app-modal *ngIf="create || edit" [title]="'Nuevo evento'" (closeEvent)="close()">
+  <form (submit)="submit()" [formGroup]="eventForm" class="space-y-3">
+    <div class="flex justify-center">
+      <label class="flex flex-col justify-center items-center bg-slate-200 h-24 w-24 relative">
+        <img src="{{cover}}" alt="" class="object-cover h-full">
+        <div class="flex flex-col justify-center items-center absolute">
+          <i class="uil uil-image-plus text-5xl"></i>
+        </div>
+        <input type="file" class="hidden" accept="image/*" (change)="change($event)"/>
+      </label>
+
+
+    </div>
+
+    <div>
+      <div>
+        <label for="name">{{'Nombre'}}</label>
+        <input [formControlName]="'name'" type="text" id="name" class="w-full">
+      </div>
+      <div>
+        <label for="description" class="">{{'Descripción'}}</label>
+        <input [formControlName]="'description'" type="text" id="description" class="w-full">
+      </div>
+      <div>
+        <label for="date">{{'Fecha'}}</label>
+        <input [formControlName]="'date'" type="date" id="date" class="w-full">
+      </div>
+      <div>
+        <label>{{'Estado'}}</label>
+        <div class="space-x-5 bg-slate-200 p-2">
+          <label class="text-base font-normal"><input [formControlName]="'status'" value="1" type="radio"
+                                                      class="inline">{{'Público'}}</label>
+          <label class="text-base font-normal"><input [formControlName]="'status'" value="2" type="radio"
+                                                      class="inline">{{'Privado'}}</label>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button class="btn-black w-full" [disabled]="eventForm.invalid">{{create ? 'Agregar' : 'Guardar'}}</button>
+      </div>
+    </div>
+
+    <div class="col-start-2 flex flex-col gap-2" *ngIf="edit">
+      <button type="button" class="btn-option" [routerLink]="['/','photos','your-events',selectedEvent.id]">
+        <i class="uil uil-images"></i>
+        <span class="text-sm">{{' Ver fotos'}}</span>
+      </button>
+      <button type="button" class="btn-option" (click)="member.show=true">
+        <i class="uil uil-users-alt"></i>
+        <span class="text-sm">{{' Miembros'}}</span>
+      </button>
+      <button type="button" class="btn-option" (click)="member.add=true">
+        <i class="uil uil-user-plus"></i>
+        <span class="text-sm">{{' Agregar fotógrafo'}}</span>
+      </button>
+
+      <button type="button" class="btn-red" (click)="delete=true">{{'Eliminar'}}</button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal *ngIf="delete" [title]="'Eliminar evento'" (closeEvent)="delete=false">
+  <p>{{'¿Está seguro que desea eliminar este evento?'}}</p>
+  <div class="flex justify-end gap-5 pt-5">
+    <button type="button" class="btn-cancel" (click)="delete=false">{{'Cancelar'}}</button>
+    <button type="button" class="btn-danger" (click)="deleteEvent()">{{'Eliminar'}}</button>
+  </div>
+</app-modal>
+
+<app-modal *ngIf="member.show" [title]="'miembros'" (closeEvent)="member.show=false">
+  <ul class="list-disc pl-5 space-y-2">
+    <li *ngFor="let memb of members">
+      <div class="flex justify-between">
+        <span>{{memb?.attributes?.fullName}}</span>
+        <i class="uil uil-minus-circle text-gray-500 hover:text-red-500"
+           (click)="member.delete=true; selectedMember=memb"></i>
+      </div>
+    </li>
+  </ul>
+  <div class="flex justify-end pt-8">
+  <button type="button" class="btn-cancel" (click)="member.show=false">{{'Cerrar'}}</button>
+  </div>
+</app-modal>
+
+<app-modal *ngIf="member.add" [title]="'miembros'" (closeEvent)="member.add=false">
+  <form [formGroup]="memberForm" (submit)="addMember()">
+    <div>
+    <label for="identifier">{{'Nombre de usuario o Correo'}}</label>
+    <input [formControlName]="'identifier'" type="text" id="identifier" class="w-full">
+    </div>
+
+    <div class="flex justify-end gap-5 pt-8">
+      <button type="button" class="btn-cancel" (click)="member.add=false">{{'Cancelar'}}</button>
+      <button class="btn-black" [disabled]="memberForm.invalid">{{'Agregar'}}</button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal *ngIf="member.delete" [title]="'Eliminar evento'" (closeEvent)="member.delete=false">
+  <p>{{'¿Está seguro que desea eliminar este evento?'}}</p>
+  <div class="flex justify-end gap-5 pt-5">
+    <button type="button" class="btn-cancel" (click)="member.delete=false">{{'Cancelar'}}</button>
+    <button type="button" class="btn-danger" (click)="deleteMember()">{{'Eliminar'}}</button>
+  </div>
+</app-modal>
+

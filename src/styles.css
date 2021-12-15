@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  label{
+    @apply text-xs font-medium text-slate-600
+  }
+  input{
+    @apply bg-slate-200 focus:outline-none focus:ring-2 focus:ring-black block p-2
+  }
+
+  input[type="radio"]{
+    @apply bg-slate-200 focus:outline-none focus:ring-0 m-1
+  }
+
+  button{
+    @apply px-3 py-2 font-medium
+  }
+}
+
+@layer components {
+  .btn-black{
+    @apply bg-black text-white border-2 border-black
+  }
+  .btn-black:disabled{
+    @apply bg-white text-black border-2 border-black
+  }
+  .btn-red{
+    @apply bg-white border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white
+  }
+
+  .btn-danger{
+    @apply bg-red-500 text-white
+  }
+
+  .btn-cancel{
+    @apply border-2 border-slate-400 text-slate-400 hover:bg-slate-200
+  }
+
+  .btn-option{
+    @apply bg-slate-200 hover:bg-slate-300
+  }
+
+
+
+  .inactive-tab{
+    @apply py-0 uppercase
+  }
+  .active-tab{
+    @apply inactive-tab border-b-2 border-black
+  }
+  .inactive-badge{
+    @apply border-2 rounded-full border-black capitalize shadow-md
+  }
+  .active-badge{
+    @apply inactive-badge shadow-md shadow-black bg-black text-white
+  }
+}

@@ -1,0 +1,17 @@
+<div class="h-full flex justify-center items-center">
+<form [formGroup]="loginForm" class="w-1/4 space-y-4" (submit)="login()">
+  <div>
+    <label for="identifier">{{'Nombre de usuario o correo'}}</label>
+    <input [formControlName]="'identifier'" type="text" id="identifier"  class="w-full">
+  </div>
+
+  <div>
+    <label for="password">{{'Contraseña'}}</label>
+    <input [formControlName]="'password'" type="password" id="password" class="w-full">
+  </div>
+
+  <div class="pt-8">
+    <button class="btn-black w-full" [disabled]="loginForm.invalid">{{'Acceder'}}</button>
+  </div>
+  </form>
+</div>

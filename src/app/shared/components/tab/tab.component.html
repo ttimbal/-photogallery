@@ -1,0 +1,13 @@
+<div class="flex gap-4" [ngClass]="{'border-b':!withBadges}">
+  <ng-container *ngIf="withBadges; then badges else normal"></ng-container>
+</div>
+
+<ng-template #normal>
+  <button *ngFor="let option of options; let index = index" (click)="select(index)"
+          [ngClass]="{'inactive-tab': index!==selected, 'active-tab':  index===selected}">{{option}}</button>
+</ng-template>
+
+<ng-template #badges>
+  <button *ngFor="let option of options; let index = index" (click)="select(index)"
+          [ngClass]="{'inactive-badge': index!==selected, 'active-badge':  index===selected}">{{option}}</button>
+</ng-template>

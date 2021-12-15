@@ -1,0 +1,23 @@
+<h1 class="font-medium uppercase">{{'Eventos públicos'}}</h1>
+
+<div class="grid grid-cols-4 gap-5 pt-5">
+  <div *ngFor="let event of (events$ | async)?.data">
+    <section class="bg-white py-2 px-4 border shadow-md cursor-pointer" [routerLink]="['/','photos','public-event',event.id]">
+      <header class="flex justify-between">
+        <div class="flex flex-col">
+          <h1 class="capitalize font-medium">{{event?.attributes?.name}}</h1>
+          <span class="text-gray-400 text-xs">{{event?.attributes?.date}}</span>
+        </div>
+        <div>
+            <span
+              class="bg-green-300 text-green-600 rounded-full px-1 text-xs">{{event?.attributes?.status?.data?.attributes?.name}}</span>
+        </div>
+      </header>
+      <div class="flex justify-center">
+        <img class="h-36 object-cover" src="{{event.attributes.cover.data[0].attributes.url}}" alt="">
+      </div>
+      <p class="text-gray-400 text-sm">{{event?.attributes?.description}}</p>
+
+    </section>
+  </div>
+</div>

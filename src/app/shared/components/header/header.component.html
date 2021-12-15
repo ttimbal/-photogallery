@@ -1,0 +1,9 @@
+<header class="h-16 bg-black w-full flex justify-between items-center px-10">
+  <span class="text-white">{{'Photo Gallery'}}</span>
+  <div class="flex gap-4 justify-end text-white capitalize">
+    <a *ngFor="let option of options" [routerLink]="option.route"  (click)="clicked(option.name)"
+       [routerLinkActive]="'border-b-2 border-white px-2'" [routerLinkActiveOptions]="{exact:true}">
+      <span>{{option.name}}</span>
+    </a>
+  </div>
+</header>
