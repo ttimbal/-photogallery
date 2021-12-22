@@ -69,7 +69,7 @@ export class PaymentComponent implements OnInit {
       const data = this.urls[i];
       if (img) {
         if (data.url) {
-          const imageBlob = await fetch(data.url).then(response => response.blob());
+          const imageBlob = await fetch(data.url,{mode: 'no-cors'}).then(response => response.blob());
           const imgData = new File([imageBlob], 'filename.jpg');
           img.file('original.jpg', imgData, {base64: true});
         }
