@@ -70,33 +70,34 @@ export class PaymentComponent implements OnInit {
       if (img) {
         if (data.url) {
           const imageBlob = await fetch(data.url,{mode: 'no-cors'}).then(response => response.blob());
-          const imgData = new File([imageBlob], 'filename.jpg');
+
+          const imgData = new File([imageBlob], 'original.jpg');
           img.file('original.jpg', imgData, {base64: true});
         }
         if (data.formats.large) {
-          const imageBlob = await fetch(data.formats.large).then(response => response.blob());
-          const imgData = new File([imageBlob], 'filename.jpg');
+          const imageBlob = await fetch(data.formats.large,{mode: 'no-cors'}).then(response => response.blob());
+          const imgData = new File([imageBlob], 'large.jpg');
           img.file('large.jpg', imgData, {base64: true});
         }
         if (data.formats.medium) {
-          const imageBlob = await fetch(data.formats.medium).then(response => response.blob());
-          const imgData = new File([imageBlob], 'filename.jpg');
+          const imageBlob = await fetch(data.formats.medium,{mode: 'no-cors'}).then(response => response.blob());
+          const imgData = new File([imageBlob], 'medium.jpg');
           img.file('medium.jpg', imgData, {base64: true});
         }
         if (data.formats.small) {
-          const imageBlob = await fetch(data.formats.small).then(response => response.blob());
-          const imgData = new File([imageBlob], 'filename.jpg');
+          const imageBlob = await fetch(data.formats.small,{mode: 'no-cors'}).then(response => response.blob());
+          const imgData = new File([imageBlob], 'small.jpg');
           img.file('small.jpg', imgData, {base64: true});
         }
         if (data.formats.thumbnail) {
-          const imageBlob = await fetch(data.formats.thumbnail).then(response => response.blob());
-          const imgData = new File([imageBlob], 'filename.jpg');
+          const imageBlob = await fetch(data.formats.thumbnail,{mode: 'no-cors'}).then(response => response.blob());
+          const imgData = new File([imageBlob], 'thumbnail.jpg');
           img.file('thumbnail.jpg', imgData, {base64: true});
         }
       }
 
       zip.generateAsync({type: "blob"}).then(function (content) {
-        saveAs(content, "example.zip");
+        saveAs(content, "fotos.zip");
       });
     }
   }

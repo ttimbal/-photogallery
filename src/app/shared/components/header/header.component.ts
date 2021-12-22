@@ -37,23 +37,23 @@ export class HeaderComponent implements OnInit,OnDestroy {
   optionsMain() {
     this.options = [
       {
-        name: 'home',
+        name: 'inicio',
         route: ['/']
       },
       {
-        name: 'events',
+        name: 'eventos',
         route: ['/', 'events']
       },
       {
-        name: 'photos',
+        name: 'fotos',
         route: ['/', 'photos']
       },
       {
-        name: 'cart',
+        name: 'carrito',
         route: ['/', 'cart']
       },
       {
-        name: 'logout',
+        name: 'salir',
         route: ['/','auth', 'logout']
       },
     ];
