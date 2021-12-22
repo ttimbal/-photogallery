@@ -55,9 +55,9 @@ ngOnDestroy() :void{
     const values = this.registerForm.value;
     const uploadObserver$=this.uploadService.uploadImage(this.file).subscribe(
       res => {
-        const url=environment.url
+        //const url=environment.url
         values.profilePhoto = res[0].id.toString()
-        values.url= url+res[0].url;
+        values.url= res[0].url;
         this.register(values)
       },
       error => console.error(error)
