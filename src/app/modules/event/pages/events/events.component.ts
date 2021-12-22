@@ -46,7 +46,8 @@ export class EventsComponent implements OnInit {
       description: new FormControl('', Validators.required),
       date: new FormControl('', Validators.required),
       status: new FormControl('1', Validators.required)
-    })
+    });
+
   }
 
   close() {

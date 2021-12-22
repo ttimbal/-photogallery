@@ -1,0 +1,6 @@
+
+<div *ngIf="photo" [routerLink]="['/','photos','details',photo?.id]"
+  class="bg-slate-100 hover:bg-slate-200 shadow-md cursor-pointer flex justify-center" >
+  <img alt="" class="h-64 object-cover"
+       src="{{photo?.attributes?.image?.data?.attributes?.url}}">
+</div>

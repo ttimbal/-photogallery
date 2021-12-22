@@ -22,11 +22,16 @@ export class MainComponent implements OnInit,OnDestroy {
     const activatedRouteObserver$=this.activatedRoute.firstChild?.url.subscribe(
       res => {
         const path = res[0].path;
-        if (path === 'your-main') this.selected = 0;
+        if (path === 'your-photos') this.selected = 0;
         if (path === 'your-events') this.selected = 1;
       }
     );
-    if(activatedRouteObserver$!==undefined)
+
+    if(!this.activatedRoute.firstChild)
+      this.router.navigate(['your-photos'], {relativeTo: this.activatedRoute});
+
+
+      if(activatedRouteObserver$!==undefined)
     this.listObservers$.push(activatedRouteObserver$);
   }
 
@@ -36,7 +41,7 @@ export class MainComponent implements OnInit,OnDestroy {
 
   selectedEvent($index: number) {
     this.selected=$index;
-    if ($index === 0) this.router.navigate(['your-main'], {relativeTo: this.activatedRoute});
+    if ($index === 0) this.router.navigate(['your-photos'], {relativeTo: this.activatedRoute});
     if ($index === 1) this.router.navigate(['your-events'], {relativeTo: this.activatedRoute});
   }
 

@@ -1,1 +1,5 @@
-<p>your-photos works!</p>
+<div class="grid grid-cols-3 gap-5">
+  <ng-container  *ngFor="let photo of (photos$|async)?.data">
+    <app-photo [photo]="photo.attributes.photo.data"></app-photo>
+  </ng-container>
+</div>

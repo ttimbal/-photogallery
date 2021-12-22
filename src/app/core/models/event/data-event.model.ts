@@ -3,7 +3,7 @@ import {DataUserModel} from "../user/data-user.model";
 import {DataStatusModel} from "../status/data-status.model";
 
 export interface DataEventModel {
-  id: 2,
+  id: number
   attributes: {
     uuid: string
     name: string

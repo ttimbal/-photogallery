@@ -9,7 +9,6 @@ module.exports = {
         inp:'#e2e8f0',
       }
     },
-
   },
   plugins: [],
 }

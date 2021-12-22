@@ -4,7 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import {RouterModule} from "@angular/router";
 import {TabComponent} from "./components/tab/tab.component";
 import { ModalComponent } from './components/modal/modal.component';
-import { ImageControlDirective } from './directives/image-control.directive';
+import { PhotoComponent } from './components/photo/photo.component';
 
 
 
@@ -13,13 +13,13 @@ import { ImageControlDirective } from './directives/image-control.directive';
         HeaderComponent,
         TabComponent,
         ModalComponent,
-        ImageControlDirective
+        PhotoComponent
     ],
     exports: [
         HeaderComponent,
         TabComponent,
         ModalComponent,
-        ImageControlDirective
+        PhotoComponent
     ],
     imports: [
         CommonModule,

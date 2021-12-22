@@ -1,10 +1,8 @@
-<div class="grid grid-cols-3  gap-5">
-  <div  *ngFor="let photo of (photos$|async)?.data"
-        class="bg-slate-100 hover:bg-slate-200 shadow-md cursor-pointer flex justify-center" >
-  <img alt="" class="h-64 object-cover"
-       src="{{photo?.attributes?.image?.data?.attributes?.url}}">
-  </div>
-
+<div class="grid grid-cols-3 gap-5 mt-8">
+  <ng-container  *ngFor="let photo of (photos$|async)?.data">
+    <app-photo [photo]="photo"></app-photo>
+    <!--.attributes.image.data-->
+  </ng-container>
 </div>
 
 <app-modal *ngIf="create" [title]="'Nuevo evento'" (closeEvent)="close()">

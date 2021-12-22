@@ -3,27 +3,38 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {UploadService} from "../../../shared/services/upload.service";
 import {LocalStorageService} from "ngx-webstorage";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {EventModel} from "../../../core/models/event/event.model";
-import {map} from "rxjs/operators";
+import {map, switchMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 private readonly URL: string=environment.url;
-private readonly URL_ROOT: string=environment.url_root;
+
+  private refresh$ = new BehaviorSubject<boolean>(true);
 
   constructor(private http: HttpClient,private uploadService: UploadService,
-  private localStorageService: LocalStorageService) { }
+  private localStorageService: LocalStorageService) {
+  }
 
-  getEvents():Observable<EventModel>{
-    return this.http.get<EventModel>(`${this.URL}/events?populate=*&sort=createdAt:desc`)
+  private refresh(): void {
+    this.refresh$.next(true);
+  }
+  getEvents(): Observable<EventModel> {
+    return this.refresh$.pipe(switchMap(_ => this.loadEvents()));
+  }
+
+
+  loadEvents():Observable<EventModel>{
+    const user=this.localStorageService.retrieve('user');
+    return this.http.get<EventModel>(`${this.URL}/events?populate=*&sort=createdAt:desc&filters[user][id]=${user.id}`)
       .pipe(
         map(events=>{
-          events.data.forEach(event=>{
+      /*    events.data.forEach(event=>{
             event.attributes.cover.data[0].attributes.url=this.URL_ROOT+event.attributes.cover.data[0].attributes.url;
-          });
+          });*/
           return events
         })
       );
@@ -41,7 +52,9 @@ private readonly URL_ROOT: string=environment.url_root;
         }
         this.http.post<EventModel>(`${this.URL}/events`,values).subscribe(
           res=>{
-            console.log(res)},
+            console.log(res);
+            this.refresh();
+          },
           err=>{
             console.log(err)},
         )
@@ -53,7 +66,8 @@ private readonly URL_ROOT: string=environment.url_root;
   delete(id: number) {
     this.http.delete<EventModel>(`${this.URL}/events/${id}`).subscribe(
       res=>{
-        console.log(res)
+        console.log(res);
+        this.refresh();
       },
       err => {
         console.log(err)}
@@ -72,7 +86,9 @@ private readonly URL_ROOT: string=environment.url_root;
       }
       this.http.put<EventModel>(`${this.URL}/events/${id}`,values).subscribe(
         res=>{
-          console.log(res)},
+          console.log(res);
+          this.refresh();
+        },
         err=>{
           console.log(err)},
       );
@@ -90,7 +106,9 @@ private readonly URL_ROOT: string=environment.url_root;
         }
         this.http.put<EventModel>(`${this.URL}/events/${id}`,values).subscribe(
           res=>{
-            console.log(res)},
+            console.log(res);
+            this.refresh();
+            },
           err=>{
             console.log(err)},
         )
@@ -102,7 +120,9 @@ private readonly URL_ROOT: string=environment.url_root;
   addMember(id: number, identifier: any) {
     this.http.put<EventModel>(`${this.URL}/events/${id}/add-member`,{...identifier}).subscribe(
       res=>{
-        console.log(res)},
+        console.log(res);
+        this.refresh();
+        },
       err=>{
         console.log(err)},
     );
@@ -111,7 +131,9 @@ private readonly URL_ROOT: string=environment.url_root;
     console.log(memberId)
     this.http.put<EventModel>(`${this.URL}/events/${id}/delete-member`,{userId: memberId}).subscribe(
       res=>{
-        console.log(res)},
+        console.log(res);
+        this.refresh();
+        },
       err=>{
         console.log(err)},
     );

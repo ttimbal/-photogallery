@@ -7,6 +7,7 @@ import { YourPhotosComponent } from './pages/your-photos/your-photos.component';
 import { YourEventsComponent } from './pages/your-events/your-events.component';
 import { EventPhotosComponent } from './pages/your-events/event-photos/event-photos.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { DetailsComponent } from './pages/details/details.component';
 
 
 
@@ -15,7 +16,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     MainComponent,
     YourPhotosComponent,
     YourEventsComponent,
-    EventPhotosComponent
+    EventPhotosComponent,
+    DetailsComponent
   ],
   imports: [
     CommonModule,

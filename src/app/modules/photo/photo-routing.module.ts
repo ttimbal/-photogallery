@@ -4,11 +4,16 @@ import {MainComponent} from "./pages/main/main.component";
 import {YourPhotosComponent} from "./pages/your-photos/your-photos.component";
 import {YourEventsComponent} from "./pages/your-events/your-events.component";
 import {EventPhotosComponent} from "./pages/your-events/event-photos/event-photos.component";
+import {DetailsComponent} from "./pages/details/details.component";
 
 const routes: Routes = [
   {
     path: 'public-event/:id',
     component:EventPhotosComponent,
+  },
+  {
+    path:'details/:id',
+    component:DetailsComponent,
   },
   {
     path:'',

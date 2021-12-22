@@ -5,6 +5,7 @@ import {UploadService} from "../../../../shared/services/upload.service";
 import {LocalStorageService} from "ngx-webstorage";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
   registerForm: FormGroup = new FormGroup({});
   image: string = ''
   listObservers$:Subscription[]=[];
-
+  file!:File;
   constructor(private authService: AuthService,
               private uploadService: UploadService,
               private localStorageService: LocalStorageService,
@@ -40,6 +41,7 @@ ngOnDestroy() :void{
   change($event: any) {
     if ($event.target.files.length > 0) {
       const file = $event.target.files[0];
+      this.file=file;
       this.registerForm.controls['profilePhoto'].setValue(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -51,9 +53,11 @@ ngOnDestroy() :void{
 
   submit() {
     const values = this.registerForm.value;
-    const uploadObserver$=this.uploadService.uploadImage(values.profilePhoto).subscribe(
+    const uploadObserver$=this.uploadService.uploadImage(this.file).subscribe(
       res => {
+        const url=environment.url
         values.profilePhoto = res[0].id
+        values.url= url+res[0].url;
         this.register(values)
       },
       error => console.error(error)
