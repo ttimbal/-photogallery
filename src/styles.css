@@ -21,7 +21,7 @@
 
 @layer components {
   .btn-black{
-    @apply bg-black text-white border-2 border-black
+    @apply bg-lime-600 text-white border-2 border-lime-600
   }
   .btn-black:disabled{
     @apply bg-white text-black border-2 border-black
@@ -51,9 +51,9 @@
     @apply inactive-tab border-b-2 border-black
   }
   .inactive-badge{
-    @apply border-2 rounded-full border-black capitalize shadow-md
+    @apply border-2 rounded-full border-lime-600 capitalize shadow-md
   }
   .active-badge{
-    @apply inactive-badge shadow-md shadow-black bg-black text-white
+    @apply inactive-badge  bg-lime-600 text-white
   }
 }

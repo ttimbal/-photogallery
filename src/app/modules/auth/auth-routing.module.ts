@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path:'logout',
-    redirectTo:'login'
+    redirectTo:'/auth/login'
   }
 ];
 
