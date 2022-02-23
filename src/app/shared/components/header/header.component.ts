@@ -78,9 +78,8 @@ export class HeaderComponent implements OnInit,OnDestroy {
   }
 
   clicked(name:string) {
-    if (name === 'logout'){
-      this.localStorageService.clear('jwt');
-      this.localStorageService.clear('user');
+    if (name === 'salir'){
+      this.localStorageService.clear();
       this.router.navigate(['/','auth','login']);
     }
   }
