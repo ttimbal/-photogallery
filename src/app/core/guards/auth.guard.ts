@@ -13,7 +13,6 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
     const jwt = this.localStorageService.retrieve('jwt');
     if (jwt !== undefined && jwt) {
       this.router.navigate(['/']);
